@@ -1,0 +1,14 @@
+## ZIO gitignore
+
+target
+test-output/
+.sbtopts
+project/.sbt
+test-output/
+.bloop
+.metals
+metals.sbt
+.idea
+coursier
+.bsp
+.DS_Store
