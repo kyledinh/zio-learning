@@ -1,5 +1,5 @@
 scalaVersion := "3.1.3"
-name := "hello-zio-project"
+name := "hello"
 version := "0.0.1"
 
 libraryDependencies ++= Seq(

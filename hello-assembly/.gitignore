@@ -1,6 +1,6 @@
 ## ZIO gitignore
 
-target
+target/
 test-output/
 .sbtopts
 project/.sbt
