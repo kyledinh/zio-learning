@@ -5,5 +5,11 @@ build:
 	sbt assembly  
 	cp target/scala-3.1.3/*.jar dist/.
 
+docker-build:
+	time docker build -t kyledinh/restful-server .
+
+docker-run:
+	docker run -d -p 8080:8080 kyledinh/restful-server 
+
 run:
 	java -jar dist/restful-server-assembly-0.0.1.jar
