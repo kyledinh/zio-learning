@@ -52,5 +52,6 @@ Objectives to learn and have coding references for.
 <hr><br>
 
 ## Reference
+- Scala 3 Book: https://docs.scala-lang.org/scala3/book/introduction.html
 - https://zio.dev/guides/
 - https://yuchen52.medium.com/getting-started-with-docker-scala-sbt-d91f8ac22f5f
