@@ -1,6 +1,7 @@
 ## ZIO gitignore
 
-dist/*.jar
+*/dist/*.jar
+
 target
 test-output/
 .sbtopts
