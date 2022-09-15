@@ -25,3 +25,5 @@ ThisBuild / assemblyMergeStrategy := {
     val oldStrategy = (ThisBuild / assemblyMergeStrategy).value
     oldStrategy(x)
 }
+
+Test / javaOptions += "-agentlib:jdwp=transport=dt_socket,server=y,suspend=n,address=8080"
