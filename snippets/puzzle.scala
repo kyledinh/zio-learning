@@ -7,10 +7,25 @@ def main(filename : String): Unit = {
     val neighbors = (0 to 80).toVector.map(neighborsOf)
 
     printAsGrids(sudoku)
-    for (i <- 0 to 4) {
+
+    var turnCount = 0
+    var maxTurns = 100
+    var previousSolveCount = 0
+    var currentSolveCount = solvedCount(sudoku)
+
+    while (solvedCount(sudoku) < 81 && turnCount < maxTurns && previousSolveCount != currentSolveCount) do {
+        previousSolveCount = solvedCount(sudoku)
         scanAndMark(sudoku, neighbors)
+        turnCount += 1
+        currentSolveCount = solvedCount(sudoku)
+        println()
+        println(s"Turn count: ${turnCount}")
         printAsGrids(sudoku)
-    }
+    } 
+
+    if (solvedCount(sudoku) == 81) { println(s"SOLVED in ${turnCount} turns!") }
+    if (solvedCount(sudoku) < 81) { println(s"STOPPED at ${turnCount} turns!") }
+    printAsGrids(sudoku)
 }
 
 def solvedCount(sudoku: Vector[BitSet]): Int = {
@@ -18,23 +33,20 @@ def solvedCount(sudoku: Vector[BitSet]): Int = {
 }
 
 def printAsGrids(sudoku: Vector[BitSet]): Unit = {
-    println(s"=== GRID (${solvedCount(sudoku)})===")
+    println(s"==== GRID (${solvedCount(sudoku)})====")
     for (row <- 0 to 8) println(s" ${getSudokuRow(sudoku,row)}") 
     println()
 }
 
 def getSudokuRow(sudoku: Vector[BitSet], row: Int) : String = {
     val start = (row * 9) + 0 
-    val end = start + 8
+    val end = start + 9
     sudoku.slice(start, end).map( b => s"${getSudokuValue(b)}").mkString(" ")
 }
 
 def getSudokuValue(bitset: BitSet): String = {
-    if bitset.size == 1 then bitset.head.toString else "_"
+    if bitset.size == 1 then bitset.head.toString else "."
 }
-
-// [cell] his bitset with more than one bit 
-// 
 
 def scanAndMark(sudoku : Vector[BitSet], neighbors : Vector[Vector[Int]]): Unit = {
     for (index <- 0 to 80) {
@@ -46,12 +58,12 @@ def scanAndMark(sudoku : Vector[BitSet], neighbors : Vector[Vector[Int]]): Unit 
                 .map(_.head)
                 .foldLeft(BitSet())(_ + _)
             val before = BitSet().addAll(cell)
-            cell &~= ones
+            cell &~= ones // removes ones from cell
             if (sudoku(index)!= before) {
-                println(s"================ changed index $index")
+                println(s"====== changed index $index")
                 println(s"index: $index ones: $ones before: $before after: ${sudoku(index)}")
             }
-            if (sudoku(index).size == 1) println(s"================== solved index $index")
+            if (sudoku(index).size == 1) println(s"!!!!!! solved index $index")
         }
     }
 }
@@ -73,7 +85,7 @@ def getSubBlock(index: Int) : String = {
         case index if Vector(54,55,56,63,64,65,72,73,74).contains(index) => "BLOCK_6"
         case index if Vector(57,58,59,66,67,68,75,76,77).contains(index) => "BLOCK_7"
         case index if Vector(60,61,62,69,70,71,78,79,80).contains(index) => "BLOCK_8"
-        case _ => "NO_MATCH"
+        case _ => "OUTSIDE"
     }
 }
 
@@ -95,5 +107,3 @@ def load(filename: String): Vector[BitSet] = {
     }
     return grid
 }
-
-    
