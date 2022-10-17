@@ -4,7 +4,7 @@ ThisBuild / version          := "0.1.0-SNAPSHOT"
 ThisBuild / organization     := "com.example"
 ThisBuild / organizationName := "example"
 
-val animusVersion               = "0.1.15"
+// val animusVersion               = "0.1.15"
 val flywayVersion               = "8.5.12"
 val laminarVersion              = "0.14.2"
 val postgresVersion             = "42.3.6"
@@ -41,7 +41,7 @@ lazy val root = (project in file("."))
   .aggregate(backend, frontend, shared)
   .settings(name := "pet-clinic")
 
-lazy val backend = (project in file("backend"))
+lazy val backend = (project in file("restapi"))
   .settings(
     name := "pet-clinic-backend",
     libraryDependencies ++= Seq(
@@ -69,7 +69,7 @@ lazy val backend = (project in file("backend"))
   .settings(
     flywayUrl      := "jdbc:postgresql://localhost:5432/postgres",
     flywayUser     := "postgres",
-    flywayPassword := ""
+    flywayPassword := "password"
   )
   .dependsOn(shared)
 
@@ -82,7 +82,7 @@ lazy val frontend = (project in file("frontend"))
     scalaJSLinkerConfig ~= { _.withSourceMap(false) },
     libraryDependencies ++= Seq(
       "com.raquo"                     %%% "laminar"         % laminarVersion,
-      "io.github.kitlangton"          %%% "animus"          % animusVersion,
+      // "io.github.kitlangton"          %%% "animus"          % animusVersion,
       "com.raquo"                     %%% "waypoint"        % "0.5.0",
       "io.github.cquiroz"             %%% "scala-java-time" % "2.4.0",
       "com.softwaremill.sttp.client3" %%% "core"            % "3.6.2"
@@ -91,7 +91,7 @@ lazy val frontend = (project in file("frontend"))
   .settings(sharedSettings)
   .dependsOn(shared)
 
-lazy val shared = (project in file("common"))
+lazy val shared = (project in file("core"))
   .enablePlugins(ScalaJSPlugin)
   .settings(
     scalaJSLinkerConfig ~= { _.withSourceMap(false) },
