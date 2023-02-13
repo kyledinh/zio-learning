@@ -14,3 +14,5 @@ metals.sbt
 coursier
 .bsp
 .DS_Store
+
+/spider
